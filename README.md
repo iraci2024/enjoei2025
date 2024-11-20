@@ -58,8 +58,8 @@ Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei.
 
 2. Se você está usando o servidor embutido do PHP:
    - Abra o prompt de comando na pasta do projeto
-   - Execute: `php -S localhost:8000`
-   - Acesse o projeto em `http://localhost:8000`
+   - Execute: `php -S localhost:8000 (ou outra porta disponível, como 8001)`
+   - Acesse o projeto em `http://localhost:8000 (ou a porta que você escolheu)`
 
 ## Estrutura do Projeto
 
