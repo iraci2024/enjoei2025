@@ -1,26 +1,27 @@
 # Enjoei Project
 
-Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei.
+Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei, otimizado para ambiente Windows.
 
 ## Requisitos
 
-- PHP 7.4 ou superior
-- MySQL 5.7 ou superior
-- Servidor web (Apache ou XAMPP para Windows)
+- Windows 10 ou superior
+- XAMPP (com PHP 7.4 ou superior e MySQL 5.7 ou superior)
 
 ## Instalação e Configuração (Windows)
 
-1. Clone ou faça o download do repositório para seu computador local.
+1. Instalação do XAMPP:
+   - Baixe e instale o XAMPP do site oficial: https://www.apachefriends.org/index.html
+   - Durante a instalação, certifique-se de selecionar Apache, MySQL e PHP.
 
-2. Se você estiver usando XAMPP:
-   - Mova a pasta do projeto para o diretório 'htdocs' do XAMPP.
-   - Inicie o Apache e o MySQL no painel de controle do XAMPP.
+2. Configuração do Projeto:
+   - Faça o download do projeto e extraia-o para C:\xampp\htdocs\enjoei
 
-3. Configure o banco de dados:
-   - Abra o phpMyAdmin (geralmente em http://localhost/phpmyadmin)
+3. Configuração do Banco de Dados:
+   - Inicie o XAMPP Control Panel e start os serviços Apache e MySQL
+   - Abra o navegador e acesse http://localhost/phpmyadmin
    - Crie um novo banco de dados chamado 'enjoei_db'
    - Selecione o banco de dados 'enjoei_db' e vá para a aba 'SQL'
-   - Execute as seguintes queries para criar as tabelas necessárias:
+   - Cole e execute as seguintes queries:
 
      ```sql
      CREATE TABLE usuarios (
@@ -39,27 +40,37 @@ Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei.
      );
      ```
 
-4. Configure a conexão com o banco de dados:
-   - Abra o arquivo `db_config.php` no diretório do projeto
+4. Configuração da Conexão com o Banco de Dados:
+   - Navegue até C:\xampp\htdocs\enjoei
+   - Abra o arquivo `db_config.php` com um editor de texto (como o Notepad++)
    - Edite as informações de conexão:
      ```php
      <?php
       = "localhost";
-      = "root";  // ou o usuário que você configurou
-      = "";      // a senha do seu MySQL, se houver
+      = "root";
+      = "";
       = "enjoei_db";
      ?>
      ```
 
+5. Configuração de Permissões:
+   - Crie uma pasta chamada 'uploads' em C:\xampp\htdocs\enjoei
+   - Clique com o botão direito na pasta 'uploads', vá em Propriedades > Segurança
+   - Clique em 'Editar' e depois em 'Adicionar'
+   - Digite 'Everyone', clique em 'Verificar Nomes' e depois em 'OK'
+   - Marque 'Controle Total' para o grupo 'Everyone' e clique em 'Aplicar' e 'OK'
+
 ## Executando o Projeto
 
-1. Se você está usando XAMPP:
-   - O projeto deve estar acessível em `http://localhost/nome-da-pasta-do-projeto`
+1. Usando XAMPP:
+   - Certifique-se de que os serviços Apache e MySQL estão rodando no XAMPP Control Panel
+   - Abra o navegador e acesse http://localhost/enjoei
 
-2. Se você está usando o servidor embutido do PHP:
-   - Abra o prompt de comando na pasta do projeto
-   - Execute: `php -S localhost:8000 (ou outra porta disponível, como 8001)`
-   - Acesse o projeto em `http://localhost:8000 (ou a porta que você escolheu)`
+2. Usando o servidor embutido do PHP:
+   - Abra o Prompt de Comando como administrador
+   - Navegue até o diretório do projeto: `cd C:\xampp\htdocs\enjoei`
+   - Execute: `php -S localhost:8000` (ou outra porta disponível, como 8001)
+   - Acesse o projeto em `http://localhost:8000` (ou a porta que você escolheu)
 
 ## Estrutura do Projeto
 
@@ -79,22 +90,11 @@ Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei.
 3. Na página de pagamento, faça o upload do comprovante
 4. Você será redirecionado para a página de agradecimento
 
-## Processamento de Pagamentos
-
-O sistema atual não processa pagamentos reais. O upload do comprovante é simulado e os dados são apenas armazenados no banco de dados.
-
-## Segurança
-
-- Este é um projeto de demonstração. Para uso em produção, implemente medidas de segurança adicionais.
-- Use HTTPS para todas as comunicações em um ambiente de produção.
-- Implemente validação e sanitização de entrada em todos os formulários.
-- Use prepared statements para todas as queries SQL para prevenir injeção de SQL.
-
 ## Resolução de Problemas
 
-- Se encontrar erros de conexão com o banco de dados, verifique se as credenciais em `db_config.php` estão corretas.
-- Certifique-se de que o PHP tem permissões para escrever no diretório de uploads.
-- Para erros relacionados ao MySQL, verifique se o serviço está rodando.
+- Se encontrar erros de conexão com o banco de dados, verifique se o MySQL está rodando no XAMPP Control Panel
+- Para erros de "permissão negada" ao fazer upload, verifique as permissões da pasta 'uploads'
+- Se as páginas não carregarem, certifique-se de que o Apache está rodando no XAMPP Control Panel
 
 ## Suporte
 
