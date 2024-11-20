@@ -6,72 +6,60 @@ Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei.
 
 - PHP 7.4 ou superior
 - MySQL 5.7 ou superior
-- Servidor web (Apache ou Nginx)
+- Servidor web (Apache ou XAMPP para Windows)
 
-## Instalação e Configuração
+## Instalação e Configuração (Windows)
 
-1. Clone o repositório:
-   ```
-   git clone https://github.com/iraci2024/enjoei-project.git
-   cd enjoei-project
-   ```
+1. Clone ou faça o download do repositório para seu computador local.
 
-2. Configure o banco de dados:
-   - Acesse o MySQL:
-     ```
-     mysql -u root -p
-     ```
-   - Crie o banco de dados 'enjoei_db':
-     ```
-     CREATE DATABASE enjoei_db;
-     ```
-   - Crie um usuário e conceda privilégios (substitua 'seu_usuario' e 'sua_senha'):
-     ```
-     CREATE USER 'seu_usuario'@'localhost' IDENTIFIED BY 'sua_senha';
-     GRANT ALL PRIVILEGES ON enjoei_db.* TO 'seu_usuario'@'localhost';
-     FLUSH PRIVILEGES;
-     ```
-   - Saia do MySQL:
-     ```
-     EXIT;
+2. Se você estiver usando XAMPP:
+   - Mova a pasta do projeto para o diretório 'htdocs' do XAMPP.
+   - Inicie o Apache e o MySQL no painel de controle do XAMPP.
+
+3. Configure o banco de dados:
+   - Abra o phpMyAdmin (geralmente em http://localhost/phpmyadmin)
+   - Crie um novo banco de dados chamado 'enjoei_db'
+   - Selecione o banco de dados 'enjoei_db' e vá para a aba 'SQL'
+   - Execute as seguintes queries para criar as tabelas necessárias:
+
+     ```sql
+     CREATE TABLE usuarios (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       nome VARCHAR(255) NOT NULL,
+       email VARCHAR(255) NOT NULL,
+       telefone VARCHAR(20) NOT NULL
+     );
+
+     CREATE TABLE pagamentos (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       usuario_id INT NOT NULL,
+       valor DECIMAL(10, 2) NOT NULL,
+       comprovante_path VARCHAR(255) NOT NULL,
+       FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+     );
      ```
 
-3. Configure a conexão com o banco de dados:
-   - Edite o arquivo `db_config.php`:
+4. Configure a conexão com o banco de dados:
+   - Abra o arquivo `db_config.php` no diretório do projeto
+   - Edite as informações de conexão:
      ```php
      <?php
       = "localhost";
-      = "seu_usuario";
-      = "sua_senha";
+      = "root";  // ou o usuário que você configurou
+      = "";      // a senha do seu MySQL, se houver
       = "enjoei_db";
      ?>
      ```
 
-4. Importe a estrutura do banco de dados:
-   ```
-   mysql -u seu_usuario -p enjoei_db < estrutura.sql
-   ```
-   (Certifique-se de criar o arquivo estrutura.sql com as queries CREATE TABLE mencionadas anteriormente)
+## Executando o Projeto
 
-5. Configure o servidor web:
-   - Para Apache, crie ou edite o arquivo .htaccess na raiz do projeto:
-     ```
-     RewriteEngine On
-     RewriteCond %{REQUEST_FILENAME} !-f
-     RewriteCond %{REQUEST_FILENAME} !-d
-     RewriteRule ^(.*)$ index.php [QSA,L]
-     ```
-   - Certifique-se de que o mod_rewrite está habilitado no Apache
+1. Se você está usando XAMPP:
+   - O projeto deve estar acessível em `http://localhost/nome-da-pasta-do-projeto`
 
-## Executando o Backend PHP
-
-1. Se você estiver usando o servidor embutido do PHP para desenvolvimento:
-   ```
-   php -S localhost:8000
-   ```
-   Acesse o projeto em http://localhost:8000
-
-2. Se estiver usando Apache ou Nginx, configure o document root para apontar para o diretório do projeto e acesse através do seu localhost.
+2. Se você está usando o servidor embutido do PHP:
+   - Abra o prompt de comando na pasta do projeto
+   - Execute: `php -S localhost:8000`
+   - Acesse o projeto em `http://localhost:8000`
 
 ## Estrutura do Projeto
 
@@ -97,22 +85,17 @@ O sistema atual não processa pagamentos reais. O upload do comprovante é simul
 
 ## Segurança
 
-- Certifique-se de implementar medidas de segurança adicionais antes de usar em produção
-- Use HTTPS para todas as comunicações
-- Implemente validação e sanitização de entrada em todos os formulários
-- Considere usar prepared statements para todas as queries SQL
+- Este é um projeto de demonstração. Para uso em produção, implemente medidas de segurança adicionais.
+- Use HTTPS para todas as comunicações em um ambiente de produção.
+- Implemente validação e sanitização de entrada em todos os formulários.
+- Use prepared statements para todas as queries SQL para prevenir injeção de SQL.
+
+## Resolução de Problemas
+
+- Se encontrar erros de conexão com o banco de dados, verifique se as credenciais em `db_config.php` estão corretas.
+- Certifique-se de que o PHP tem permissões para escrever no diretório de uploads.
+- Para erros relacionados ao MySQL, verifique se o serviço está rodando.
 
 ## Suporte
 
 Para suporte, entre em contato através do email: contato@suporte-enjoei.online
-
-## Desenvolvimento
-
-Para contribuir com o projeto:
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
-3. Faça commit das suas mudanças (`git commit -am 'Adiciona alguma feature'`)
-4. Faça push para a branch (`git push origin feature/MinhaFeature`)
-5. Crie um novo Pull Request
-
