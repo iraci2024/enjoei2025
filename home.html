@@ -6,6 +6,7 @@
     <title>Enjoei - Central de Vendas</title>
     <link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16"> 
     <link rel="icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,6 +59,18 @@
         .btn:hover {
             background-color: #e65c55;
         }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -65,9 +78,34 @@
         <img src="images/logo1.png" alt="Enjoei" class="logo">
         <h1>Aviso</h1>
         <p>Bem-vindo à Central de Vendas aprovadas em nosso sistema.</p>
-        <p>Aqui na Enjoei, cuidamos de todo o processo de venda para você. Ao clicar em "Avançar", você será direcionado para mais informações sobre a sua venda.</p>
-        <a href="login.html" class="btn">Avançar</a>
+        <p>Aqui na Enjoei, cuidamos de todo o processo de venda para você. Por favor, preencha o formulário abaixo para continuar.</p>
+        <form id="cadastroForm">
+            <input type="text" name="nome" placeholder="Nome" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="tel" name="telefone" placeholder="Telefone" required>
+            <button type="submit" class="btn">Cadastrar e Avançar</button>
+        </form>
         <p>Saiba que estamos aqui para ajudá-lo em todas as etapas do processo de venda. Se tiver alguma dúvida, entre em contato conosco.</p>
     </div>
+
+    <script>
+    $(document).ready(function() {
+        $("#cadastroForm").submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'salvar_usuario.php',
+                type: 'post',
+                data: $(this).serialize(),
+                success: function(response) {
+                    alert('Usuário cadastrado com sucesso!');
+                    window.location.href = 'pagamento.html';
+                },
+                error: function() {
+                    alert('Erro ao cadastrar usuário.');
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
