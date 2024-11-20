@@ -24,23 +24,51 @@ Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei, com
    cd enjoei2025
    ```
 
-2. Instale as dependências:
+2. Crie um ambiente virtual (opcional, mas recomendado):
+   ```
+   python -m venv venv
+   ```
+
+3. Ative o ambiente virtual:
+   - No Windows:
+     ```
+     venv\Scripts\activate
+     ```
+   - No macOS e Linux:
+     ```
+     source venv/bin/activate
+     ```
+
+4. Instale as dependências:
    ```
    pip install -r requirements.txt
    ```
 
-3. Configure as variáveis de ambiente no arquivo `.env`:
+5. Configure as variáveis de ambiente:
+   - Crie um arquivo `.env` na raiz do projeto
+   - Adicione as seguintes variáveis:
+     ```
+     DB_HOST=seu_host
+     DB_USER=seu_usuario
+     DB_PASSWORD=sua_senha
+     DB_NAME=enjoei_db
+     FLASK_APP=app.py
+     FLASK_ENV=development
+     ```
+
+6. Inicialize o banco de dados:
    ```
-   DB_HOST=seu_host
-   DB_USER=seu_usuario
-   DB_PASSWORD=sua_senha
-   DB_NAME=enjoei_db
+   flask db init
+   flask db migrate
+   flask db upgrade
    ```
 
-4. Execute o servidor Flask:
+7. Execute o servidor Flask:
    ```
-   python app.py
+   flask run
    ```
+
+   O servidor estará rodando em `http://127.0.0.1:5000/`
 
 ### Frontend (PHP):
 
@@ -86,11 +114,12 @@ Este projeto é um sistema de cadastro e pagamento para a plataforma Enjoei, com
 
 ## Uso
 
-1. Inicie o servidor backend Flask.
-2. Acesse a página inicial (home.html) através do seu navegador.
-3. Preencha o formulário de cadastro.
-4. Na página de pagamento, faça o upload do comprovante.
-5. Você será redirecionado para a página de agradecimento.
+1. Certifique-se de que o servidor backend Flask está rodando (`flask run`).
+2. Inicie seu servidor web para o frontend PHP (por exemplo, Apache ou XAMPP).
+3. Acesse a página inicial (home.html) através do seu navegador.
+4. Preencha o formulário de cadastro.
+5. Na página de pagamento, faça o upload do comprovante.
+6. Você será redirecionado para a página de agradecimento.
 
 ## API Endpoints (Backend)
 
